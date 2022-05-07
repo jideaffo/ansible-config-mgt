@@ -1,6 +1,6 @@
 ---
 - name: update web, nfs and db servers
-  hosts: webservers, nfs, 
+  hosts: webservers, nfs, db
   remote_user: ec2-user
   become: yes
   become_user: root
@@ -9,9 +9,17 @@
       yum:
         name: wireshark
         state: latest
-
-- name: update LB and db server
-  hosts: lb, db
+    - name: Create a Folder
+      file:
+        path: /opt/TestFolder
+        state: directory
+    - name: NTP
+      yum:
+         name: chrony
+         state: present
+         
+- name: update LB 
+  hosts: lb
   remote_user: ubuntu
   become: yes
   become_user: root
@@ -24,6 +32,13 @@
       apt:
         name: wireshark
         state: latest
+    - name: Create a folder
+      file:
+        path: /opt/TestFolder
+        state: directory
+
+  
+    
 
 
   
