@@ -2,6 +2,7 @@
 # tasks file for webserver
 - name: install apache
   become: true
+  become_user: root
   ansible.builtin.yum:
     name: "httpd"
     state: present
