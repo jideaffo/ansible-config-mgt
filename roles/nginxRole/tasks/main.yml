@@ -30,12 +30,23 @@
 # Vhost configuration.
 - import_tasks: vhosts.yml
 
+
+- name: set webservers host name in /etc/hosts
+  become: yes
+  blockinfile:
+     path: /etc/hosts
+     block: |
+        {{ item.ip }} {{ item.name }}
+  loop:
+    - { name: web1, ip: 172.31.3.118 }
+    - { name: web2, ip: 172.31.11.210 }
+
 # Nginx setup.
 - name: Copy nginx configuration in place.
   become: true
   template:
-    src: "{{ nginx_conf_template }}"
-    dest: "{{ nginx_conf_file_path }}"
+    src: "nginx.conf.j2"
+    dest: "/etc/nginx/nginx.conf"
     owner: root
     group: "{{ root_group }}"
     mode: 0644

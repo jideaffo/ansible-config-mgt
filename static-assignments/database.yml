@@ -1,0 +1,4 @@
+- hosts: uat-db
+  become: yes
+  roles:
+    - mysql

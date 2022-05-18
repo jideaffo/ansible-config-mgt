@@ -6,6 +6,7 @@
   check_mode: false
 
 - name: Copy my.cnf global MySQL configuration.
+  become: yes
   template:
     src: my.cnf.j2
     dest: "{{ mysql_config_file }}"
@@ -16,6 +17,7 @@
   notify: restart mysql
 
 - name: Verify mysql include directory exists.
+  become: yes
   file:
     path: "{{ mysql_config_include_dir }}"
     state: directory
@@ -25,6 +27,7 @@
   when: mysql_config_include_files | length
 
 - name: Copy my.cnf override files into include directory.
+  become: yes
   template:
     src: "{{ item.src }}"
     dest: "{{ mysql_config_include_dir }}/{{ item.src | basename }}"

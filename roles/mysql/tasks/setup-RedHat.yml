@@ -1,5 +1,6 @@
 ---
 - name: Ensure MySQL packages are installed.
+  become: yes
   yum:
     name: "{{ mysql_packages }}"
     state: present

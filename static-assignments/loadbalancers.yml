@@ -1,0 +1,5 @@
+- hosts: uat-lb
+  become: yes
+  roles:
+    - { role: nginxRole, when: enable_nginx_lb and load_balancer_is_required }
+    - { role: apacheRole, when: enable_apache_lb and load_balancer_is_required }
